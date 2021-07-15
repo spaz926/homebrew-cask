@@ -1,9 +1,10 @@
 cask "krisp" do
-  version "1.19.12"
-  sha256 "80fda6a8fd9268b6277baf6722ca5d645d402aa2d1d5285e7a965657f81c9e14"
+  version "1.22.7"
+  sha256 "504ab202842d9b3fc6c291effe564710e779c543ba4b25a29697459bb44a47b1"
 
   url "https://cdn.krisp.ai/mac/release/v#{version.major}.#{version.minor}/krisp_#{version}.pkg"
   name "Krisp"
+  desc "Sound clear in online meetings"
   homepage "https://krisp.ai/"
 
   livecheck do

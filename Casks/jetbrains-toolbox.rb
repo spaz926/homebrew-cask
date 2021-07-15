@@ -1,28 +1,31 @@
 cask "jetbrains-toolbox" do
-  version "1.20,1.20.8352"
+  version "1.20,1.20.8804"
 
   if Hardware::CPU.intel?
+    sha256 "928824a7fdac781e7285edc4ad4034386f03863656399c0b17e65d157595cccf"
+
     url "https://download.jetbrains.com/toolbox/jetbrains-toolbox-#{version.after_comma}.dmg"
-    sha256 "03ff8595b8c42397a441376502622a687c66f8281a5c3d458f0c6bee863e736c"
   else
+    sha256 "f6c7b337eb9be64c920bbefbb18d3baf8bfb514d342392a3c2d76eb48844321a"
+
     url "https://download.jetbrains.com/toolbox/jetbrains-toolbox-#{version.after_comma}-arm64.dmg"
-    sha256 "60340a04ff154749241f61a4bbe0e8c0e9b21a43a5aa5fa401007a888e00dfcc"
   end
 
   name "JetBrains Toolbox"
   desc "JetBrains tools manager"
-  homepage "https://www.jetbrains.com/toolbox/app/"
+  homepage "https://www.jetbrains.com/toolbox-app/"
 
   livecheck do
     url "https://data.services.jetbrains.com/products/releases?code=TBA&latest=true&type=release"
     strategy :page_match do |page|
-      version = page.match(/"version":"(\d+(?:\.\d+)*)/i)
-      build = page.match(/"build":"(\d+(?:\.\d+)*)/i)
-      "#{version[1]},#{build[1]}"
+      JSON.parse(page)["TBA"].map do |release|
+        "#{release["version"]},#{release["build"]}"
+      end
     end
   end
 
   auto_updates true
+  depends_on macos: ">= :high_sierra"
 
   app "JetBrains Toolbox.app"
 
